@@ -1,0 +1,205 @@
+<!doctype html>
+<html lang="es-MX">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta
+      name="description"
+      content="Cotiza y administra reservas de mobiliario y servicios para eventos."
+    />
+    <meta name="theme-color" content="#f5f4fa" />
+    <title>Reservas para eventos</title>
+    <link rel="stylesheet" href="css/styles.css" />
+    <script type="module" src="js/app.js"></script>
+  </head>
+  <body>
+    <header class="site-header">
+      <a class="brand" href="index.html">
+        <span class="brand-mark" aria-hidden="true">✳</span>
+        <span>MiEvento <span class="brand-accent">Reservas</span></span>
+      </a>
+      <span class="header-note">Administración de eventos</span>
+    </header>
+
+    <main class="container">
+      <section class="intro" aria-labelledby="page-title">
+        <p class="eyebrow">Renta para eventos</p>
+        <h1 id="page-title">Cotiza y reserva <span>con claridad.</span></h1>
+        <p class="intro-copy">
+          Revisa los costos y la disponibilidad antes de apartar sillas y mesas para tu evento.
+        </p>
+      </section>
+
+      <div class="workspace">
+        <section class="panel form-panel" aria-labelledby="form-title">
+          <div class="panel-heading">
+            <div>
+              <p class="step-label">01 / NUEVA RESERVA</p>
+              <h2 id="form-title">Datos del evento</h2>
+            </div>
+            <span class="heading-icon" aria-hidden="true">＋</span>
+          </div>
+
+          <form id="reservation-form" novalidate>
+            <div class="form-grid">
+              <label class="field field-wide" for="customer-name">
+                Nombre del cliente
+                <input
+                  id="customer-name"
+                  name="customerName"
+                  type="text"
+                  autocomplete="name"
+                  maxlength="100"
+                  placeholder="Nombre y apellido"
+                  required
+                />
+              </label>
+
+              <label class="field field-wide" for="event-date">
+                Fecha del evento
+                <input id="event-date" name="eventDate" type="date" required />
+              </label>
+
+              <label class="field" for="chairs">
+                Sillas <span class="field-price">$15 por pieza</span>
+                <input id="chairs" name="chairs" type="number" min="0" step="1" value="0" inputmode="numeric" required />
+              </label>
+
+              <label class="field" for="tables">
+                Mesas <span class="field-price">$120 por pieza</span>
+                <input id="tables" name="tables" type="number" min="0" step="1" value="0" inputmode="numeric" required />
+              </label>
+            </div>
+
+            <fieldset class="options-fieldset">
+              <legend>Servicios opcionales</legend>
+              <label class="option-card" for="decoration">
+                <input id="decoration" name="decoration" type="checkbox" />
+                <span>
+                  <strong>Decoración</strong>
+                  <small>Paquete por evento</small>
+                </span>
+                <b>$800</b>
+              </label>
+              <label class="option-card" for="delivery">
+                <input id="delivery" name="delivery" type="checkbox" />
+                <span>
+                  <strong>Entrega</strong>
+                  <small>Tarifa fija por evento</small>
+                </span>
+                <b>$250</b>
+              </label>
+            </fieldset>
+
+            <p class="discount-note">
+              Descuento del 10% sobre servicios desde $2,000. La entrega no participa en el descuento.
+            </p>
+
+            <div class="form-actions">
+              <button class="button button-primary" id="save-reservation" type="submit">
+                Crear reserva
+              </button>
+            </div>
+            <p class="form-status" id="form-status" role="status" aria-live="polite"></p>
+          </form>
+        </section>
+
+        <aside class="panel summary-panel" aria-label="Cotización y disponibilidad">
+          <section aria-labelledby="availability-title">
+            <div class="panel-heading compact-heading">
+              <div>
+                <p class="step-label">DISPONIBILIDAD POR FECHA</p>
+                <h2 id="availability-title">Inventario restante</h2>
+              </div>
+            </div>
+            <p class="availability-date" id="availability-date">Selecciona la fecha del evento</p>
+            <div class="availability-grid">
+              <div class="availability-card">
+                <span>Sillas disponibles</span>
+                <strong id="available-chairs">120</strong>
+                <small>de 120</small>
+              </div>
+              <div class="availability-card">
+                <span>Mesas disponibles</span>
+                <strong id="available-tables">12</strong>
+                <small>de 12</small>
+              </div>
+            </div>
+          </section>
+
+          <section class="quote-section" aria-labelledby="quote-title">
+            <div class="panel-heading compact-heading">
+              <div>
+                <p class="step-label">02 / DESGLOSE</p>
+                <h2 id="quote-title">Tu cotización</h2>
+              </div>
+            </div>
+            <dl class="totals">
+              <div>
+                <dt>Subtotal</dt>
+                <dd id="subtotal">$0.00</dd>
+              </div>
+              <div>
+                <dt>Descuento</dt>
+                <dd id="discount">$0.00</dd>
+              </div>
+              <div>
+                <dt>Entrega</dt>
+                <dd id="delivery-amount">$0.00</dd>
+              </div>
+              <div class="grand-total">
+                <dt>Total</dt>
+                <dd id="total">$0.00</dd>
+              </div>
+              <div class="minimum-payment">
+                <dt>Anticipo mínimo (30%)</dt>
+                <dd id="minimum-deposit">$0.00</dd>
+              </div>
+            </dl>
+          </section>
+        </aside>
+      </div>
+
+      <section class="panel reservations-panel" aria-labelledby="reservations-title">
+        <div class="reservations-heading">
+          <div>
+            <p class="step-label">03 / CONSULTA</p>
+            <h2 id="reservations-title">Reservas</h2>
+          </div>
+          <div class="filter-controls">
+            <label class="filter-label" for="filter-date">Filtrar por fecha</label>
+            <input id="filter-date" name="filterDate" type="date" />
+            <button class="button button-secondary" id="show-all" type="button">Mostrar todas</button>
+          </div>
+        </div>
+
+        <div class="table-wrap">
+          <table class="reservations-table">
+            <thead>
+              <tr>
+                <th scope="col">ID</th>
+                <th scope="col">Cliente</th>
+                <th scope="col">Fecha</th>
+                <th scope="col">Total</th>
+                <th scope="col">Anticipo</th>
+                <th scope="col">Saldo</th>
+                <th scope="col">Estado</th>
+                <th scope="col">Acciones</th>
+              </tr>
+            </thead>
+            <tbody id="reservations-list">
+              <tr class="empty-row">
+                <td colspan="8">Aún no hay reservas registradas.</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <footer class="page-footer">
+        <span>Importes expresados en pesos mexicanos (MXN).</span>
+        <span>Los datos se guardan en este navegador.</span>
+      </footer>
+    </main>
+  </body>
+</html>
